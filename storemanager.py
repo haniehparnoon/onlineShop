@@ -69,34 +69,33 @@ class StoreManager(User):
         for i in range(number_product):
             print(f"product [{i}]")
             product_name = input("Enter product name")
-            barcode = int(input(" Enter Barcode(just enter number)"))
+            barcode = input(" Enter Barcode")
             price = self.validate_price(int(input(" Enter price")))
             brand = input("Enter Brand")
             number_available = int(input("Enter number of product"))
             expire_date = self.validate_expire_date(input(" Enter expire Date(00-03-04)"))
             product_list.append({"product_name": product_name, "barcode": barcode, "price": price, "brand": brand,
                                  "number_available": number_available, "expire_date": expire_date})
-
-        #store = self.find_store()
         self.store.add_product(product_list)
 
     def view_remaining_inventory(self):
         self.alarm()
-        #store = self.find_store()
         print('----------------------------------------Available List------------------------------------')
         available_list = self.store.view_inventory()
         self.store.view_product(available_list)
 
     def alarm(self):
-        #store = self.find_store()
         finished_product = self.store.finished_products()
-        print('----------------------------------------Alarm List------------------------------------')
-        self.store.view_product(finished_product)
+        if finished_product:
+            print('----------------------------------------Alarm List------------------------------------')
+            self.store.view_product(finished_product)
+        else:
+            print("*****no item in alarm list****")
+            logging.info("*****no item in alarm list****")
 
     def view_invoices(self):
         invoices = Invoice()
         invoices.view_all_customer_invoices(self.store.store_name)
-
 
     def view_information_all_customer(self):
         self.print_customer(self.find_customers())
@@ -155,10 +154,6 @@ class StoreManager(User):
 
 
 
-store1 = StoreManager("09101501584",'0910')
-store1.view_invoices()
-# store1.block_customer()
-# #store1.add_product()
 
 
 

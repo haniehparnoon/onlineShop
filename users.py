@@ -7,10 +7,10 @@ from functions import hash_password, list_parser
 
 class User:
     users_file = FileHandler("users.csv")
+
     def __init__(self,username, password):
         self.username = username
         self.password = password
-
     @classmethod
     def register_user(cls):
         username = cls.validate_username(input("enter username(phone_number)"))
@@ -23,15 +23,6 @@ class User:
         else:
             print("username Exist")
 
-    # @classmethod
-    # def check_login(cls):
-    #     username = input("enter username")
-    #     password = input("enter password")
-    #     info_user = cls.users_file.find_row_item("username", username)
-    #     if info_user["password"] == password:
-    #         print(info_user)
-    #         return info_user
-
     @classmethod
     def login_user(cls):
         username = cls.validate_username(input("enter username"))
@@ -40,10 +31,6 @@ class User:
         if info_user["password"] == password:
             logging.info(f"{username} logg in")
             return info_user
-
-        # user_login = cls.check_login()
-        # print(user_login["type"])
-        # cls.print_menu_access()
 
     @classmethod
     def print_menu_access(cls):
@@ -57,8 +44,6 @@ class User:
 
         else:
             return username
-
-
 
     @staticmethod
     def chek_format_time(store_time):

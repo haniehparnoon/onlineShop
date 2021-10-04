@@ -1,2 +1,3 @@
 username,store_name,open_time,close_time,products,block_list
-09101501584,hani,00:00,23:55,"[{'product_name': 'rice', 'barcode': 12, 'price': 3000, 'brand': 'hashemi', 'number_available': 49, 'expire_date': '00-09-09'}, {'product_name': 'rob', 'barcode': 1234, 'price': 4000, 'brand': 'alaleh', 'number_available': 90, 'expire_date': '00-07-09'}]",['09125802237']
+09101501584,hani,00:00,23:55,"[{'product_name': 'rice', 'barcode': 12, 'price': 3000, 'brand': 'hashemi', 'number_available': 39, 'expire_date': '00-09-09'}, {'product_name': 'rob', 'barcode': 1234, 'price': 4000, 'brand': 'alaleh', 'number_available': 90, 'expire_date': '00-07-09'}]","['09125802237', '09101501583']"
+09127931142,mahin,07:00,23:30,"[{'product_name': 'apple', 'barcode': 123, 'price': 2000, 'brand': 'a', 'number_available': 98, 'expire_date': '00-09-08'}, {'product_name': 'orange', 'barcode': 12, 'price': 3000, 'brand': 'o', 'number_available': 1998, 'expire_date': '00-06-05'}]",

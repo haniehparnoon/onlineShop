@@ -2,7 +2,7 @@ from file_Handler import FileHandler
 from functions import list_parser
 import logging
 import tabulate
-import datetime
+
 
 class Store:
     store_file = FileHandler("Stores.csv")
@@ -52,6 +52,7 @@ class Store:
     @staticmethod
     def view_product(list_product):
         if list_product:
+
             header = list_product[0].keys()
             rows = [x.values() for x in list_product]
             print(tabulate.tabulate(rows, header, tablefmt='grid'))
@@ -79,7 +80,6 @@ class Store:
 
     def read_file(self):
         reader = self.store_file.read_file()
-        #print(reader)
         return reader
 
     def find_product_in_store_file(self):
@@ -88,7 +88,6 @@ class Store:
             list_products = list_parser(store_product_info['products'])
             return list_products
 
-    # if customer in block list return True
     def check_customer(self, username):
         if self.block_list != '':
             block_list = list_parser(self.block_list)
@@ -126,9 +125,7 @@ class Store:
                             product_list.append(product)
                     else:
                         product_list.append(product)
-        print(product_list)
         self.products = product_list
-        # self.block_customer =
         final_list.append(self.__dict__)
         self.store_file.edit_to_file(final_list)
 

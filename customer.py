@@ -17,7 +17,7 @@ class Customer(User):
     def print_menu_access(cls):
         super().print_menu_access()
         print("----------------------------------Store Manage Menu-------------------------------")
-        print("1.View previous invoices\n2.View list of stores\n3.Store Search\n4.Select a store\n"
+        print("1.View previous invoices\n2.View list of stores\n3.Store Search and buy\n4.Select products and buy\n"
               "5.View product list\n6.sign out")
 
     def access_customer(self):
@@ -32,17 +32,9 @@ class Customer(User):
             elif n == 3:
                 self.store_search()
             elif n == 4:
-                self.select_store()
+                self.select_products()
             elif n == 5:
                 self.view_product_list()
-            # elif n == 6:
-            #     self.product_search()
-            #elif n == 7:
-                #self.select_products()
-            # elif n == 8:
-            #     self.view_pre_invoice()
-            # elif n == 9:
-            #     self.confirm_product_or_edit()
             elif n == 6:
                 print("you logged out")
                 self.sign_out()
@@ -50,6 +42,7 @@ class Customer(User):
 
     def view_previous_invoices(self):
         invoice = Invoice()
+        print("----------------------------------Previous invoices-------------------------------")
         invoice.show_customer_invoices(self.username)
 
     def view_list_of_stores(self, store_name = None):
@@ -58,11 +51,11 @@ class Customer(User):
         open_list_store = [i['store_name'] for i in reader
                            if (self.convert_string_to_time(i["open_time"]) <= time_ <= self.convert_string_to_time(i["close_time"]))]
         if not store_name:
+            print("----------------------------------List Open Store-----------------------------------")
             self.print_store([open_list_store])
         return open_list_store
 
     def store_search(self, store_name = None):
-        #store_name = input("enter store name").lower()
         self.select_products(store_name)
 
     def select_store(self,store_name = None):
@@ -79,7 +72,8 @@ class Customer(User):
                         return i
             else:
                 print("there is not this store")
-        print("sorry all stores are closed")
+        else:
+            print("sorry all stores are closed")
 
     def view_product_list(self, store_name = None):
         if store_name:
@@ -125,14 +119,13 @@ class Customer(User):
                             else:
                                 print("product name or number of product is wrong")
                                 logging.info("product name or number of product is wrong")
-                    self.view_pre_invoice(product_list)
-                    list_save_product =self.confirm_product_or_edit(product_list)
-                    #final_list = self.confirm_product_or_edit(product_list)
-                    # print(final_list)
-                    if list_save_product:
-                        for product in list_save_product:
-                            print(product)
-                            store1.update_product(product["product_name"], product["number_of_product"])
+                    if product_list:
+                        self.view_pre_invoice(product_list)
+                        list_save_product =self.confirm_product_or_edit(product_list)
+
+                        if list_save_product:
+                            for product in list_save_product:
+                                store1.update_product(product["product_name"], product["number_of_product"])
 
                 else:
                     print("Sorry you are block you cant select product")
@@ -165,16 +158,14 @@ class Customer(User):
             if final_list:
                 self.final_factors.append({"products": final_list, "total": Invoice.calculate_total(product_list)})
                 logging.info("new invoice added")
-            #     #------------
-            #     #print(self.final_factors)
-            #     print(f"{final_list}final_list")
                 return final_list
             else:
                 print("there is not any item")
 
     def sign_out(self):
         invoice = Invoice()
-        invoice.edit_invoices(self.username, self.final_factors)
+        if self.final_factors:
+            invoice.edit_invoices(self.username, self.final_factors)
 
 
     @staticmethod
@@ -211,7 +202,3 @@ class Customer(User):
 
 
 
-customer = Customer("09125802238",'0912')
-# customer.store_search()
-# customer.sign_out()
-customer.view_previous_invoices()

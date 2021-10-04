@@ -1,3 +1,5 @@
+import logging
+
 import tabulate
 from file_Handler import FileHandler
 from functions import list_parser
@@ -9,6 +11,7 @@ class Invoice:
 
     @staticmethod
     def print_pre_invoices(product_list):
+        print("----------------------------Pre invoices-------------------------")
         header = product_list[0].keys()
         rows = [x.values() for x in product_list]
         print(tabulate.tabulate(rows, header, tablefmt='grid'))
@@ -51,8 +54,12 @@ class Invoice:
 
     def show_customer_invoices(self, username):
         info_username = self.invoice_file.find_row_item("username", username)
-        list_invoices = list_parser(info_username["invoices"])
-        self.print_invoices_customer(list_invoices)
+        if info_username:
+            list_invoices = list_parser(info_username["invoices"])
+            self.print_invoices_customer(list_invoices)
+        else:
+            print("there is not any invoices first buy from shop")
+            logging.info("there is not any invoices first buy from shop")
 
 
     @staticmethod
@@ -77,6 +84,9 @@ class Invoice:
 
         if final_list:
             self.print_invoices_customer(final_list)
+        else:
+            print(f"No customer has purchased from {store_name} store")
+            logging.info(f"No customer has purchased from {store_name} store")
 
 
 
